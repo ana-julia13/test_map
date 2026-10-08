@@ -1,0 +1,4 @@
+mapa_*
+!mapa_*.f
+rodadas/
+*.o
