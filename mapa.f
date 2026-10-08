@@ -143,3 +143,9 @@ c     valores da grade e volta para cartesianas
 
       return
       end
+
+c=======================================================================
+c     Puxa o codigo base (nao mexer). Para compilar basta:
+c        gfortran -o mapa_mapa mapa.f
+c=======================================================================
+      include 'mapa_base.f'

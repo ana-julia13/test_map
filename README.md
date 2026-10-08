@@ -4,24 +4,21 @@ O código foi dividido em duas partes:
 
 | Arquivo | O que é | Precisa mexer? |
 |---|---|---|
-| `base/mapa_base.f` | integrador RA15, forças, J2/J4, conversões, FFT, saídas | **não** |
-| `base/dimensoes.inc` | número máximo de corpos (`NMAX=20`) | só se tiver mais de 20 corpos |
-| `condicoes/<caso>.f` | grade, passo, planeta, massas e condições iniciais | **sim, é aqui que se trabalha** |
+| `mapa_base.f` | integrador RA15, forças, J2/J4, conversões, FFT, saídas | **não** |
+| `dimensoes.inc` | número máximo de corpos (`NMAX=20`) | só se tiver mais de 20 corpos |
+| `<caso>.f` (`naiad.f`, `victor.f`, ...) | grade, passo, planeta, massas e condições iniciais | **sim, é aqui que se trabalha** |
 | `originais/` | os 4 programas antigos, só para consulta | não |
 
 ## Como compilar e rodar
 
 ```sh
-make CASO=naiad          # gera o executável mapa_naiad
-make run CASO=naiad      # compila e roda dentro de rodadas/naiad/
+gfortran -o mapa_naiad naiad.f
+./mapa_naiad
 ```
 
-Ou na mão:
-
-```sh
-gfortran -O2 -ffixed-line-length-none -std=legacy -Ibase \
-    -o mapa_naiad base/mapa_base.f condicoes/naiad.f
-```
+Cada arquivo de caso termina com `include 'mapa_base.f'`, então ele já puxa
+o código base sozinho (os três arquivos têm que estar na mesma pasta).
+Use `-O2` para rodar mais rápido. Ou use o Makefile: `make run CASO=naiad`.
 
 Casos que já existem (convertidos dos programas antigos):
 
@@ -34,8 +31,8 @@ Casos que já existem (convertidos dos programas antigos):
 
 ## Como criar um caso novo
 
-Copie um arquivo parecido (`cp condicoes/naiad.f condicoes/meucaso.f`), edite
-e rode `make run CASO=meucaso`. O arquivo de condições tem só duas subrotinas:
+Copie um arquivo parecido (`cp naiad.f meucaso.f`), edite
+e compile com `gfortran -o mapa_meucaso meucaso.f`. O arquivo de condições tem só duas subrotinas:
 
 **`CONFIG`**: os parâmetros da rodada:
 

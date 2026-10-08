@@ -148,3 +148,9 @@ c     elementos -> cartesianas (xpla) para todos os corpos
 
       return
       end
+
+c=======================================================================
+c     Puxa o codigo base (nao mexer). Para compilar basta:
+c        gfortran -o mapa_map_i map_i.f
+c=======================================================================
+      include 'mapa_base.f'
